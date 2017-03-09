@@ -1,0 +1,57 @@
+package com.ipartek.formacion.ws;
+
+import java.io.Serializable;
+
+import com.ipartek.formacion.pojo.Pelicula;
+
+public class PeliculaMensaje implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Pelicula pelicula;
+	private String mensaje;
+
+	public PeliculaMensaje() {
+		super();
+		this.pelicula = null;
+		this.mensaje = "";
+
+	}
+
+	public Pelicula getPelicula() {
+		return pelicula;
+	}
+
+	public void setPelicula(Pelicula pelicula) {
+		this.pelicula = pelicula;
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return super.equals(obj);
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
+
+}
