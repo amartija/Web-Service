@@ -41,4 +41,13 @@
     <servlet-name>alumnows</servlet-name>
     <url-pattern>/alumnows</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>peliculaws</servlet-name>
+    <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>peliculaws</servlet-name>
+    <url-pattern>/peliculaws</url-pattern>
+  </servlet-mapping>
 </web-app>

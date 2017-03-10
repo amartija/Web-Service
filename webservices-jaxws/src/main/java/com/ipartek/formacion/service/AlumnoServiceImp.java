@@ -10,8 +10,29 @@ public class AlumnoServiceImp implements AlumnoService {
 	List<Alumno> alumnos;
 
 	public AlumnoServiceImp() {
-		super();
 		alumnos = new ArrayList<Alumno>();
+		init();
+
+	}
+
+	private void init() {
+		Alumno alumno = new Alumno();
+		alumno.setCodigo(0);
+		alumno.setNombre("primero");
+		alumno.setApellidos("primero apellidos");
+		alumnos.add(alumno.getCodigo(), alumno);
+
+		alumno = new Alumno();
+		alumno.setCodigo(1);
+		alumno.setNombre("segundo");
+		alumno.setApellidos("segundo apellidos");
+		alumnos.add(alumno.getCodigo(), alumno);
+
+		alumno = new Alumno();
+		alumno.setCodigo(2);
+		alumno.setNombre("tercero");
+		alumno.setApellidos("tercero apellidos");
+		alumnos.add(alumno.getCodigo(), alumno);
 
 	}
 

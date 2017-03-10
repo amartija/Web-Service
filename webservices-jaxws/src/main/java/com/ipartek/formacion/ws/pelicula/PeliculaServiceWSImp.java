@@ -1,4 +1,7 @@
-package com.ipartek.formacion.ws;
+package com.ipartek.formacion.ws.pelicula;
+
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.jws.WebMethod;
@@ -13,7 +16,7 @@ import com.ipartek.formacion.pojo.Pelicula;
 import com.ipartek.formacion.service.PeliculaService;
 import com.ipartek.formacion.service.PeliculaServiceImp;
 
-@WebService(serviceName = "peliculasservice", portName = "", targetNamespace = "")
+@WebService(serviceName = "peliculasservice", portName = "", targetNamespace = "http://com.ipartek.formacion/types")
 @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL)
 public class PeliculaServiceWSImp {
 	// recoger estructura comunicacion
@@ -49,7 +52,27 @@ public class PeliculaServiceWSImp {
 		boolean valida = false;
 		// WS Security
 		MessageContext contextoMensaje = wsc.getMessageContext();
+		Map<?, ?> encabezados = (Map<?, ?>) contextoMensaje.get(MessageContext.HTTP_REQUEST_HEADERS);
+
+		// el nombre del atributo de "encabezados" se llama asi porque asi se
+		// decide
+		// es una lista porque lo decidimos asi
+		List<?> listaparametros = (List<?>) encabezados.get("sessionId");
+		// cogemos un identificador
+		String sessionId = "ipsession";
+
+		if (listaparametros != null) {
+			// Aqui hariamos o produciriamos cualquier validacion compleja
+			if (sessionId.equals(listaparametros.get(0).toString())) {
+
+				valida = true;
+
+			}
+
+		}
+
 		return valida;
 
 	}
+
 }
