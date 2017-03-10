@@ -75,4 +75,18 @@ public class PeliculaServiceWSImp {
 
 	}
 
+	@WebMethod(operationName = "obtenerListado")
+	public PeliculaColeccion getAll() {
+		PeliculaService ps = new PeliculaServiceImp();
+		PeliculaColeccion listaPeliculas = new PeliculaColeccion();
+		List<Pelicula> peliculas;
+
+		peliculas = (List<Pelicula>) ps.getAll();
+
+		listaPeliculas.setPeliculas(peliculas);
+
+		return listaPeliculas;
+
+	}
+
 }

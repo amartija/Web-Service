@@ -4,9 +4,44 @@
   <types>
     <xs:schema version="1.0" targetNamespace="http://com.ipartek.formacion/types" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+      <xs:element name="obtenerListado" type="tns:obtenerListado"/>
+
+      <xs:element name="obtenerListadoResponse" type="tns:obtenerListadoResponse"/>
+
       <xs:element name="obtenerporid" type="tns:obtenerporid"/>
 
       <xs:element name="obtenerporidResponse" type="tns:obtenerporidResponse"/>
+
+      <xs:complexType name="obtenerListado">
+        <xs:sequence/>
+      </xs:complexType>
+
+      <xs:complexType name="obtenerListadoResponse">
+        <xs:sequence>
+          <xs:element name="return" type="tns:peliculaColeccion" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="peliculaColeccion">
+        <xs:sequence>
+          <xs:element name="peliculas" type="tns:pelicula" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="pelicula">
+        <xs:sequence>
+          <xs:element name="codigo" type="xs:int"/>
+          <xs:element name="genero" type="tns:genero" minOccurs="0"/>
+          <xs:element name="titulo" type="xs:string" minOccurs="0"/>
+          <xs:element name="fEstreno" type="xs:dateTime" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="genero">
+        <xs:sequence>
+          <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
 
       <xs:complexType name="obtenerporid">
         <xs:sequence>
@@ -26,21 +61,6 @@
           <xs:element name="pelicula" type="tns:pelicula" minOccurs="0"/>
         </xs:sequence>
       </xs:complexType>
-
-      <xs:complexType name="pelicula">
-        <xs:sequence>
-          <xs:element name="codigo" type="xs:int"/>
-          <xs:element name="genero" type="tns:genero" minOccurs="0"/>
-          <xs:element name="titulo" type="xs:string" minOccurs="0"/>
-          <xs:element name="fEstreno" type="xs:dateTime" minOccurs="0"/>
-        </xs:sequence>
-      </xs:complexType>
-
-      <xs:complexType name="genero">
-        <xs:sequence>
-          <xs:element name="nombre" type="xs:string" minOccurs="0"/>
-        </xs:sequence>
-      </xs:complexType>
 </xs:schema>
   </types>
   <message name="obtenerporid">
@@ -49,15 +69,34 @@
   <message name="obtenerporidResponse">
     <part name="parameters" element="tns:obtenerporidResponse"/>
   </message>
+  <message name="obtenerListado">
+    <part name="parameters" element="tns:obtenerListado"/>
+  </message>
+  <message name="obtenerListadoResponse">
+    <part name="parameters" element="tns:obtenerListadoResponse"/>
+  </message>
   <portType name="PeliculaServiceWSImp">
     <operation name="obtenerporid">
       <input wsam:Action="http://com.ipartek.formacion/types/PeliculaServiceWSImp/obtenerporidRequest" message="tns:obtenerporid"/>
       <output wsam:Action="http://com.ipartek.formacion/types/PeliculaServiceWSImp/obtenerporidResponse" message="tns:obtenerporidResponse"/>
     </operation>
+    <operation name="obtenerListado">
+      <input wsam:Action="http://com.ipartek.formacion/types/PeliculaServiceWSImp/obtenerListadoRequest" message="tns:obtenerListado"/>
+      <output wsam:Action="http://com.ipartek.formacion/types/PeliculaServiceWSImp/obtenerListadoResponse" message="tns:obtenerListadoResponse"/>
+    </operation>
   </portType>
   <binding name="PeliculaServiceWSImpPortBinding" type="tns:PeliculaServiceWSImp">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
     <operation name="obtenerporid">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="obtenerListado">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
