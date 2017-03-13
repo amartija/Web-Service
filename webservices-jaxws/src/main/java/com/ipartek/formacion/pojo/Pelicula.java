@@ -53,20 +53,26 @@ public class Pelicula implements Serializable, Comparable<Pelicula> {
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return super.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (codigo ^ (codigo >>> 32));
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+		boolean iguales = false;
+		if (obj != null && obj instanceof Pelicula && this.codigo == ((Pelicula) obj).getCodigo()) {
+			iguales = true;
+		}
+		return iguales;
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+
+		return "Pelicula [codigo=" + codigo + ", titulo=" + titulo + ", fEstreno=" + fEstreno + ", genero=" + genero
+				+ "]";
 	}
 
 	@Override

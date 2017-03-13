@@ -2,6 +2,7 @@ package com.ipartek.formacion.ws.pelicula;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.jws.WebMethod;
@@ -48,6 +49,36 @@ public class PeliculaServiceWSImp {
 
 	}
 
+	private boolean validarUserPassword() {
+		boolean valida = false;
+		MessageContext contextoMensaje = wsc.getMessageContext();
+		Map<?, ?> encabezados = (Map<?, ?>) contextoMensaje.get(MessageContext.HTTP_REQUEST_HEADERS);
+
+		// el nombre del atributo de "encabezados" se llama asi porque asi se
+		// decide
+		// es una lista porque lo decidimos asi
+
+		List<?> listaUsuario = (List<?>) encabezados.get("usuario");
+		List<?> listaPassword = (List<?>) encabezados.get("password");
+		// cogemos un identificador
+
+		String usuario = "user";
+		String password = "pass";
+
+		if (listaUsuario != null) {
+			// Aqui hariamos o produciriamos cualquier validacion compleja
+
+			if (usuario.equals(listaUsuario.get(0).toString())) {
+
+				if (password.equals(listaPassword.get(0).toString())) {
+					valida = true;
+				}
+			}
+		}
+
+		return valida;
+	}
+
 	private boolean validarPeticion() {
 		boolean valida = false;
 		// WS Security
@@ -57,18 +88,19 @@ public class PeliculaServiceWSImp {
 		// el nombre del atributo de "encabezados" se llama asi porque asi se
 		// decide
 		// es una lista porque lo decidimos asi
-		List<?> listaparametros = (List<?>) encabezados.get("sessionId");
+
+		List<?> listaSession = (List<?>) encabezados.get("sessionId");
+
 		// cogemos un identificador
 		String sessionId = "ipsession";
 
-		if (listaparametros != null) {
+		if (listaSession != null) {
 			// Aqui hariamos o produciriamos cualquier validacion compleja
-			if (sessionId.equals(listaparametros.get(0).toString())) {
+
+			if (sessionId.equals(listaSession.get(0).toString())) {
 
 				valida = true;
-
 			}
-
 		}
 
 		return valida;
@@ -79,14 +111,24 @@ public class PeliculaServiceWSImp {
 	public PeliculaColeccion getAll() {
 		PeliculaService ps = new PeliculaServiceImp();
 		PeliculaColeccion listaPeliculas = new PeliculaColeccion();
-		List<Pelicula> peliculas;
+		Set<Pelicula> peliculas;
 
-		peliculas = (List<Pelicula>) ps.getAll();
+		if (validarUserPassword()) {
 
-		listaPeliculas.setPeliculas(peliculas);
+			peliculas = (Set<Pelicula>) ps.getAll();
+
+			listaPeliculas.setPeliculas(peliculas);
+
+			if (peliculas != null) {
+
+				listaPeliculas.setMensaje("No hay peliculas guardadas");
+			}
+
+		} else {
+			listaPeliculas.setMensaje("El usuario o contraseña es erroneo");
+		}
 
 		return listaPeliculas;
-
 	}
 
 }
